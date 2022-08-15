@@ -1,26 +1,25 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import styled from 'styled-components';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+interface AppSize {
+  width: number;
+  height: number;
 }
+
+const App: React.FC = () => {
+  const { innerHeight: height, innerWidth: width } = window;
+  console.log(height, width);
+  return (
+    <AppWrap width={width} height={height}>
+      ss
+    </AppWrap>
+  );
+};
+
+const AppWrap = styled.div<AppSize>`
+  width: ${props => props.width}px;
+  height: ${props => props.height}px;
+  background: beige;
+`;
 
 export default App;
