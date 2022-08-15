@@ -7,38 +7,27 @@ import { TodoModel } from 'src/store/model/TodoModel';
 import styled from 'styled-components';
 import { useStores } from '../../context/RootStoreProvider';
 import { useLocalStorage } from '../../hook/useLocalStorage';
-import { CompleteProps } from '../../types';
+import { CompleteProps, TodoListProps } from '../../types';
 
-const TodoList = observer(() => {
-  const { todoStore } = useStores();
-  const [state, setState] = useLocalStorage('tsodo', []);
-  const [todoList, setTodoList] = useState<Array<TodoModel>>(state);
-  const navigate = useNavigate();
-  useEffect(() => {
-    console.log('TodoList에서 ########', state);
-    setTodoList(state);
-  }, []);
-
-  useEffect(() => {
-    setState(todoList);
-    todoStore._todoList = todoList;
-  }, [todoList]);
-
+const TodoList: React.FC<Partial<TodoListProps>> = ({
+  todoList,
+  setTodoList,
+  setViewingTodoId,
+  setViewingTodoItem,
+  setPage
+}) => {
   const handleAddTodo = () => {
     const newTodo = new TodoModel();
     newTodo.id = new Date().toISOString();
     newTodo.isComplete = false;
     newTodo.title = `이번주 할일 ${todoList.length + 1}`;
     setTodoList(todoList.concat(newTodo));
-    setState(todoList);
   };
 
   const handleTodoClick = (event: React.MouseEvent<HTMLSpanElement>, todoId: string) => {
-    console.log('투두 클ㄹ릭!!');
-
-    console.log(todoId);
-    todoStore.viewingId = todoId;
-    navigate(PATH.TODO);
+    setPage('todo');
+    setViewingTodoId(todoId);
+    setViewingTodoItem(todoList.find(todo => todo.id === todoId));
   };
   const handleDeleteClick = (event: React.MouseEvent<HTMLSpanElement>, todoId: string) => {
     const updatedList = todoList.filter(todo => todo.id !== todoId);
@@ -61,14 +50,13 @@ const TodoList = observer(() => {
             <Due>due date : 2020.09.01</Due>
           </TitleDue>
           <DeleteIcon onClick={e => handleDeleteClick(e, todo.id)}>
-            <img src="/images/x.svg" />
+            <img src="/images/x.svg" style={{ width: '10px', height: '10px' }} />
           </DeleteIcon>
         </TodoItem>
       ))}
     </TodoListWrap>
   );
-});
-
+};
 const TodoListWrap = styled.div`
   background: white;
   height: 400px;
@@ -102,11 +90,13 @@ const Title = styled.span<CompleteProps>`
 `;
 const Due = styled.div``;
 const DeleteIcon = styled.div`
-  width: 10px;
-  height: 10px;
+  width: 10%;
+  height: 40px;
   display: flex;
   align-items: center;
   cursor: grab;
+  justify-content: right;
+  padding-right: 10px;
 `;
 
 export default TodoList;

@@ -6,50 +6,45 @@ import { useLocalStorage } from 'src/hook/useLocalStorage';
 import { useNavigate } from 'react-router-dom';
 import { PATH } from 'src/constant/routePath';
 import { TodoModel } from 'src/store/model/TodoModel';
+import { TodoListProps } from 'src/types';
 
-const TodoDetail = observer(() => {
-  const { todoStore } = useStores();
-  const [state, setState] = useLocalStorage('tsodo', []);
-  const [editingId, setEditingId] = useState<string>();
-  const [title, setTitle] = useState<string>(todoStore.viewingTodo.title);
-  const [content, setContent] = useState<string>(todoStore.viewingTodo.content);
+const TodoDetail: React.FC<Partial<TodoListProps>> = observer(
+  ({ todoList, setTodoList, viewingTodoItem, viewingTodoId, setPage }) => {
+    const [title, setTitle] = useState('');
+    const [content, setContent] = useState('');
 
-  useEffect(() => {
-    console.log('첫 로드시 Storage state >>>>', state);
-    setEditingId(todoStore.viewingId);
-  }, []);
-  const navigate = useNavigate();
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    todoStore.viewingTodo.title = e.target.value;
-  };
-  const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    todoStore.viewingTodo.content = e.target.value;
-  };
-  //TODO 날짜로 변경
-  const handleDueChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+    useEffect(() => {
+      setTitle(viewingTodoItem?.title);
+    }, [viewingTodoItem]);
 
-  const handleSaveClick = () => {
-    const updatedTodo = new TodoModel();
-    updatedTodo.title = todoStore.viewingTodo.title;
-    updatedTodo.content = todoStore.viewingTodo.content;
-    updatedTodo.id = todoStore.viewingTodo.id;
-    const updatedState = state.map(todo => (todo.id === editingId ? { ...todo, ...updatedTodo } : todo));
-    console.log('************', updatedState);
-    setState(updatedState);
-    navigate(PATH.HOME);
-  };
-  return (
-    <div>
-      <h3>제목</h3>
-      <TodoTitleInput value={todoStore.viewingTodo.title} onChange={handleTitleChange} />
-      <h3>내용</h3>
-      <TodoContent value={todoStore.viewingTodo.content} />
+    const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+      setTitle(e.target.value);
+    };
+    const handleContentChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+    //TODO 날짜로 변경
+    const handleDueChange = (e: React.ChangeEvent<HTMLInputElement>) => {};
+
+    const handleSaveClick = () => {
+      const updatedTodo = new TodoModel();
+      updatedTodo.id = viewingTodoId;
+      updatedTodo.title = title;
+      const updatedList = todoList.map(todo => (todo.id === viewingTodoId ? { ...todo, title: title } : todo));
+      setTodoList(updatedList);
+      setPage('Home');
+    };
+    return (
+      <div>
+        <h3>제목</h3>
+        <TodoTitleInput value={title} onChange={handleTitleChange} />
+        <h3>내용</h3>
+        {/* <TodoContent value={todoStore.viewingTodo.content} />
       <h3>Due Date</h3>
-      <TodoDueDateInput value={todoStore.viewingTodo.title} />
-      <SaveButton onClick={handleSaveClick}>저장 버튼</SaveButton>
-    </div>
-  );
-});
+      <TodoDueDateInput value={todoStore.viewingTodo.title} /> */}
+        <SaveButton onClick={handleSaveClick}>저장 버튼</SaveButton>
+      </div>
+    );
+  }
+);
 
 const TodoTitleInput = styled.input`
   width: 100%;
