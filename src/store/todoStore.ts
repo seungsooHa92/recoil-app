@@ -5,13 +5,17 @@ import { IRootStore } from '../types';
 class TodoStore {
   rootStore: IRootStore;
 
-  todoList: Array<TodoModel> = [];
+  _todoList: Array<TodoModel> = [];
 
   // editingTodo: TodoModel = {id:};
 
   constructor(rootStore: IRootStore) {
     makeAutoObservable(this);
     this.rootStore = rootStore;
+  }
+
+  setLocalTodo(values: Array<TodoModel>) {
+    this._todoList = values;
   }
 }
 

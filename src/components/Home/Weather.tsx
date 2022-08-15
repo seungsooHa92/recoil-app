@@ -3,13 +3,13 @@ import styled from 'styled-components';
 
 const Weather = () => {
   return (
-    <div>
+    <WeatherWrap>
       <h3>이번주 날씨</h3>
-    </div>
+    </WeatherWrap>
   );
 };
 const WeatherWrap = styled.div`
-  algin-items: center;
-  background: lightgreen;
+  background: yellow;
+  height: 250px;
 `;
 export default Weather;

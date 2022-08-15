@@ -1,13 +1,13 @@
 import { makeAutoObservable } from 'mobx';
 
 export class TodoModel {
-  id: string = '';
+  id = '';
 
-  isComplete: boolean = false;
+  isComplete = false;
 
-  title: string = '';
+  title = '';
 
-  dueDate: Date = new Date();
+  dueDate: Date;
 
   constructor() {
     makeAutoObservable(this);
