@@ -1,5 +1,4 @@
 import { observer } from 'mobx-react-lite';
-import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import { useStores } from '../context/RootStoreProvider';
 
@@ -8,7 +7,7 @@ const AppHeader = observer(() => {
   return (
     <HeaderWrap>
       <h1>THIS WEEK</h1>
-      {uiStore.editMode ? <h3>신나는 일주일을 계획합시다!</h3> : <>df</>}
+      {uiStore.editMode ? <h3>신나는 일주일을 계획합시다!</h3> : <>에딧모드 아닐때</>}
     </HeaderWrap>
   );
 });

@@ -1,9 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import AppHeader from './components/AppHeader';
 import { RootStoreProvider } from './context/RootStoreProvider';
 import { AppSize } from './types';
 import { rootStore } from './store/rootStore';
+import Home from './components/Home/Home';
+import { PATH } from './constant/routePath';
+import TodoDetail from './components/TodoEdit/TodoDetail';
 
 const App: React.FC = () => {
   const { innerHeight: height, innerWidth: width } = window;
@@ -13,7 +17,14 @@ const App: React.FC = () => {
       <AppWrap height={height}>
         <AppContentWrap>
           <AppHeader />
-          <ContentBodyWrap>d</ContentBodyWrap>
+          <ContentBodyWrap>
+            <Router basename={PATH.HOME}>
+              <Routes>
+                <Route path={PATH.HOME} element={<Home />} />
+                <Route path={PATH.TODO} element={<TodoDetail />} />
+              </Routes>
+            </Router>
+          </ContentBodyWrap>
         </AppContentWrap>
       </AppWrap>
     </RootStoreProvider>
