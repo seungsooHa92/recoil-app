@@ -34,17 +34,14 @@ const App: React.FC = () => {
 const AppWrap = styled.div<AppSize>`
   width: 100%;
   height: ${props => props.height}px;
-  background: orange;
   min-width: 375px;
   max-width: 640px;
 `;
 const AppContentWrap = styled.div`
   width: 100%;
   height: 100%;
-  background: beige;
 `;
 const ContentBodyWrap = styled.div`
-  background: salmon;
   padding-left: 24px;
   padding-right: 24px;
 `;

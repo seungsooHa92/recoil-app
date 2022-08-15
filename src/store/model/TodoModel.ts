@@ -7,6 +7,8 @@ export class TodoModel {
 
   title = '';
 
+  content = 'content default값 테스트';
+
   dueDate: Date;
 
   constructor() {

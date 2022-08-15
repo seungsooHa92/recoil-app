@@ -8,3 +8,7 @@ export interface IRootStore {
   todoStore: TodoStore;
   uiStore: UiStore;
 }
+
+export interface CompleteProps {
+  isComplete: boolean;
+}

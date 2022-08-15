@@ -13,7 +13,6 @@ const AppHeader = observer(() => {
 });
 const HeaderWrap = styled.div`
   algin-items: center;
-  background: lightgreen;
   padding-top: 32px;
   padding-left: 24px;
   padding-right: 24px;
