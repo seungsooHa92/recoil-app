@@ -121,6 +121,7 @@ const TodoItemInner = styled.div`
 const CheckBoxWrap = styled.div`
   display: flex;
   align-items: center;
+  justify-content: center;
   width: 10%;
   height: 100%;
 `;

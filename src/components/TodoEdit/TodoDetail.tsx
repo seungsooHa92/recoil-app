@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { ITodo } from 'src/types';
-import { useRecoilState } from 'recoil';
+import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { editState, todoState, viewingTodo } from '../../recoil/todo';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
@@ -9,19 +9,17 @@ import moment from 'moment';
 
 const TodoDetail: React.FC = () => {
   const [todoList, setTodoList] = useRecoilState<ITodo[]>(todoState);
-  const [viewingTodoItem, setViewingTodoItem] = useRecoilState<ITodo>(viewingTodo);
+  const viewingTodoItem = useRecoilValue<ITodo>(viewingTodo);
 
   const [title, setTitle] = useState(viewingTodoItem?.title);
   const [content, setContent] = useState(viewingTodoItem?.content);
-  const [date, setDate] = useState<Date>(
-    viewingTodoItem.dueDate === null ? new Date() : new Date(viewingTodoItem.dueDate)
-  );
-  const [editMode, setEditMode] = useRecoilState(editState);
 
-  useEffect(() => {
-    console.log('디테일 화면 .....');
-    console.log(' 보고있는  todo 아이템:', viewingTodoItem);
-  }, []);
+  const [date, setDate] = useState<Date>(viewingTodoItem.dueDate);
+
+  const [calendarDate, setCalendarDate] = useState<Date>(new Date());
+  const [dateChanged, setDateChanged] = useState(false);
+
+  const setEditMode = useSetRecoilState(editState);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value);
@@ -31,6 +29,8 @@ const TodoDetail: React.FC = () => {
   };
   const handleDateChange = (date: Date) => {
     setDate(date);
+    setDateChanged(true);
+    setCalendarDate(date);
   };
 
   const handleSaveClick = () => {
@@ -38,7 +38,7 @@ const TodoDetail: React.FC = () => {
       id: viewingTodoItem.id,
       title: title,
       content: content,
-      dueDate: date
+      dueDate: dateChanged || date !== null ? date : null
     };
     const updatedList = todoList.map(todo => (todo.id === viewingTodoItem.id ? { ...todo, ...updatedTodo } : todo));
     setTodoList(updatedList);
@@ -51,8 +51,14 @@ const TodoDetail: React.FC = () => {
       <h3>내용</h3>
       <TodoContent value={content} onChange={handleContentChange} />
       <h3 style={{ marginBottom: '0px' }}>Due Date</h3>
-      <StyledCalendar value={date} onChange={handleDateChange} />
-      <DateContent>{moment(date).format('YYYY년 MM월 DD일')}</DateContent>
+      <StyledCalendar value={calendarDate} onChange={handleDateChange} />
+      <DateContent>
+        {/* 오늘 날짜는 기본으로 보여주고 , due date의 유무에따라 due date영역 렌더 */}
+        {'(today)' +
+          moment(new Date()).format('YYYY.MM.DD') +
+          ' / Due Date :' +
+          (date === null ? 'No due Date' : moment(date).format('YYYY년 MM월 DD일'))}
+      </DateContent>
       <SaveButton onClick={handleSaveClick}>저장 버튼</SaveButton>
     </div>
   );
