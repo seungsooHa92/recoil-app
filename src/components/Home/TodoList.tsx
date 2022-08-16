@@ -1,56 +1,57 @@
-import { observer } from 'mobx-react-lite';
-import React, { useState } from 'react';
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
-import { PATH } from 'src/constant/routePath';
-import { TodoModel } from 'src/store/model/TodoModel';
+import React from 'react';
+import { useRecoilState, useSetRecoilState } from 'recoil';
+import { editState, todoState, viewingId } from 'src/recoil/todo';
 import styled from 'styled-components';
-import { useStores } from '../../context/RootStoreProvider';
-import { useLocalStorage } from '../../hook/useLocalStorage';
-import { CompleteProps, TodoListProps } from '../../types';
+import { CompleteProps, ITodo } from '../../types';
+import { viewingTodo } from '../../recoil/todo';
+import moment from 'moment';
 
-const TodoList: React.FC<Partial<TodoListProps>> = ({
-  todoList,
-  setTodoList,
-  setViewingTodoId,
-  setViewingTodoItem,
-  setPage
-}) => {
+const TodoList: React.FC = () => {
+  const [todoList, setTodoList] = useRecoilState<ITodo[]>(todoState);
+  const setEditMode = useSetRecoilState(editState);
+  const setViewingTodoId = useSetRecoilState(viewingId);
+  const setViewingTodoItem = useSetRecoilState(viewingTodo);
+
   const handleAddTodo = () => {
-    const newTodo = new TodoModel();
-    newTodo.id = new Date().toISOString();
-    newTodo.isComplete = false;
-    newTodo.title = `이번주 할일 ${todoList.length + 1}`;
+    const newTodo = {
+      id: new Date().toISOString(),
+      isComplete: false,
+      title: `이번주 할일 ${todoList.length + 1}`,
+      content: '',
+      dueDate: null
+    };
     setTodoList(todoList.concat(newTodo));
   };
 
-  const handleTodoClick = (event: React.MouseEvent<HTMLSpanElement>, todoId: string) => {
-    setPage('todo');
-    setViewingTodoId(todoId);
-    setViewingTodoItem(todoList.find(todo => todo.id === todoId));
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, todoId: string) => {
+    const updatedList = todoList.map(todo => (todo.id === todoId ? { ...todo, isComplete: !todo.isComplete } : todo));
+    setTodoList(updatedList);
   };
+
   const handleDeleteClick = (event: React.MouseEvent<HTMLSpanElement>, todoId: string) => {
     const updatedList = todoList.filter(todo => todo.id !== todoId);
     setTodoList(updatedList);
   };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>, todoId: string) => {
-    console.log(e.target.checked);
-    const updatedList = todoList.map(todo => (todo.id === todoId ? { ...todo, isComplete: !todo.isComplete } : todo));
-    setTodoList(updatedList);
+
+  const handleTodoClick = (event: React.MouseEvent<HTMLSpanElement>, todoId: string) => {
+    setEditMode(true);
+    setViewingTodoId(todoId);
+    const view = todoList.find(todo => todo.id === todoId);
+    setViewingTodoItem(view);
   };
   return (
     <TodoListWrap>
-      <h3>이번주 To-Do</h3>
+      <h3>To-do</h3>
       <AddButton onClick={handleAddTodo}>추가 버튼</AddButton>
-      {todoList?.map(todo => (
+      {todoList.map(todo => (
         <TodoItem key={todo.id}>
           <input type="checkbox" checked={todo.isComplete} onChange={e => handleChange(e, todo.id)} />
           <TitleDue onClick={e => handleTodoClick(e, todo.id)}>
             <Title isComplete={todo.isComplete}>{todo.title}</Title>
-            <Due>due date : 2020.09.01</Due>
+            {todo.dueDate ? <Due>due date:{moment(todo.dueDate).format('YYYY.MM.DD')}</Due> : <></>}
           </TitleDue>
           <DeleteIcon onClick={e => handleDeleteClick(e, todo.id)}>
-            <img src="/images/x.svg" style={{ width: '10px', height: '10px' }} />
+            <img src="/images/x.svg" alt="" style={{ width: '10px', height: '10px' }} />
           </DeleteIcon>
         </TodoItem>
       ))}
@@ -77,7 +78,7 @@ const TodoItem = styled.div`
   align-items: center;
   height: 45px;
   width: 100%;
-  font-size: 15px;
+  font-size: 14px;
   font-style: strike;
 `;
 

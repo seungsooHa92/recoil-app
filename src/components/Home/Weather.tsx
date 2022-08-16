@@ -1,23 +1,17 @@
-import { observer } from 'mobx-react-lite';
 import React from 'react';
-import { useStores } from 'src/context/RootStoreProvider';
 import styled from 'styled-components';
 
-const Weather = observer(() => {
-  const { todoStore } = useStores();
-  //console.log('현재 todoStore에 있는 todo List :', todoStore._todoList);
-  // console.log('클릭해서 보고있는 todo:', todoStore.viewingTodo);
+const Weather = () => {
   return (
     <WeatherWrap>
-      <h3>이번주 날씨</h3>
-      {/* {todoStore._todoList.map(todo => (
-        <ul key={todo.id}>{todo.title}</ul>
-      ))} */}
+      <h3>이번주 날씨 임시로 atom 써서 todo 리스트 </h3>
     </WeatherWrap>
   );
-});
+};
+
 const WeatherWrap = styled.div`
   background: yellow;
   height: 250px;
 `;
+
 export default Weather;

@@ -1,16 +1,13 @@
-import { observer } from 'mobx-react-lite';
 import styled from 'styled-components';
-import { useStores } from '../context/RootStoreProvider';
 
-const AppHeader = observer(() => {
-  const { uiStore } = useStores();
+const AppHeader = () => {
   return (
     <HeaderWrap>
       <h1>THIS WEEK</h1>
-      {uiStore.editMode ? <h3>신나는 일주일을 계획합시다!</h3> : <>에딧모드 아닐때</>}
+      {/* {uiStore.editMode ? <h3>신나는 일주일을 계획합시다!</h3> : <>에딧모드 아닐때</>} */}
     </HeaderWrap>
   );
-});
+};
 const HeaderWrap = styled.div`
   algin-items: center;
   padding-top: 32px;
