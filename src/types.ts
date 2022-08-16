@@ -2,8 +2,13 @@ export interface AppSize {
   height: number;
 }
 
-export interface CompleteProps {
+export interface Expired {
+  isExpired: boolean;
+}
+
+export interface TitleProps {
   isComplete: boolean;
+  isExpired: boolean;
 }
 
 export interface ITodo {

@@ -13,8 +13,10 @@ const TodoDetail: React.FC = () => {
 
   const [title, setTitle] = useState(viewingTodoItem?.title);
   const [content, setContent] = useState(viewingTodoItem?.content);
-  const [date, setDate] = useState<Date>(viewingTodoItem.dueDate === null ? new Date() : viewingTodoItem.dueDate);
-  const [eitMode, setEditMode] = useRecoilState(editState);
+  const [date, setDate] = useState<Date>(
+    viewingTodoItem.dueDate === null ? new Date() : new Date(viewingTodoItem.dueDate)
+  );
+  const [editMode, setEditMode] = useRecoilState(editState);
 
   useEffect(() => {
     console.log('디테일 화면 .....');
