@@ -12,6 +12,10 @@ class WeatherModel {
   get temp(): number {
     return this.response.temp.max;
   }
+
+  get krtime(): Date {
+    return new Date(this.response.dt * 1000);
+  }
 }
 
 export default WeatherModel;

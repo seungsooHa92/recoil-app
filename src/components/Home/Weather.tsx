@@ -2,6 +2,7 @@ import React, { Suspense } from 'react';
 import styled from 'styled-components';
 import { useRecoilValueLoadable } from 'recoil';
 import { weatherList } from '../../recoil/todo';
+import moment from 'moment';
 
 const Loading = () => {
   return <div className="lds-dual-ring"></div>;
@@ -9,16 +10,22 @@ const Loading = () => {
 
 const Weather: React.FC = () => {
   const weathers = useRecoilValueLoadable(weatherList);
-
+  const isToday = (date: Date): boolean => {
+    return new Date().getDate() === date.getDate();
+  };
   const renderWeatherCard = () => {
     switch (weathers.state) {
       case 'hasValue':
         return (
           <>
             {weathers.contents.map(weather => (
-              <WeatherCard key={weather.key} className="card">
+              <WeatherCard key={weather.key} className={isToday(weather.krtime) ? 'card-today' : 'card'}>
                 <TempWrap>{weather.temp}℃</TempWrap>
                 <WeatherImg src={weather.imageURL} />
+                <WeatherDate>
+                  {isToday(weather.krtime) ? '오늘 ' : ''}
+                  {moment(weather.krtime).format('MM.DD')}
+                </WeatherDate>
               </WeatherCard>
             ))}
           </>
@@ -34,10 +41,14 @@ const Weather: React.FC = () => {
     }
   };
 
+  const handleScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    console.log('스크롤 ....');
+    console.log(e.target);
+  };
   return (
     <WeatherWrap>
       <h3>이번주 날씨 </h3>
-      <WeatherCardWrap>{renderWeatherCard()}</WeatherCardWrap>
+      <WeatherCardWrap onScroll={e => handleScroll(e)}>{renderWeatherCard()}</WeatherCardWrap>
     </WeatherWrap>
   );
 };
@@ -86,10 +97,14 @@ const WeatherCardWrap = styled.div`
   flex-wrap: no-wrap;
   overflow-x: scroll;
   overflow-y: hidden;
+  .card-today {
+    background: #13bd7e33;
+  }
 `;
 
 const WeatherCard = styled.div`
-  background: beige;
+  text-align: center;
+  padding-top: 10px;
   width: 120px;
   height: 170px;
   flex: 0 0 auto;
@@ -106,4 +121,7 @@ const WeatherImg = styled.img`
   width: 100px;
   height: 100px;
 `;
+
+const WeatherDate = styled.div``;
+
 export default Weather;
