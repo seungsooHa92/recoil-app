@@ -1,33 +1,21 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
+import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 import AppHeader from './components/AppHeader';
 import { AppSize } from './types';
-import TodoDetail from './components/TodoEdit/TodoDetail';
-import Weather from './components/Home/Weather';
-import TodoList from './components/Home/TodoList';
-import { useRecoilValue } from 'recoil';
-import { editState } from './recoil/todo';
+import AppBody from './components/AppBody';
 
 const App: React.FC = () => {
   const { innerHeight: height, innerWidth: width } = window;
-  const editMode = useRecoilValue(editState);
-
   return (
-    <AppWrap height={height}>
-      <AppContentWrap>
-        <AppHeader />
-        <ContentBodyWrap>
-          {editMode ? (
-            <TodoDetail />
-          ) : (
-            <>
-              <Weather />
-              <TodoList />
-            </>
-          )}
-        </ContentBodyWrap>
-      </AppContentWrap>
-    </AppWrap>
+    <RecoilRoot>
+      <AppWrap height={height}>
+        <AppContentWrap>
+          <AppHeader />
+          <AppBody />
+        </AppContentWrap>
+      </AppWrap>
+    </RecoilRoot>
   );
 };
 
@@ -40,10 +28,6 @@ const AppWrap = styled.div<AppSize>`
 const AppContentWrap = styled.div`
   width: 100%;
   height: 100%;
-`;
-const ContentBodyWrap = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
 `;
 
 export default App;
