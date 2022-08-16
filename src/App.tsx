@@ -1,5 +1,4 @@
 import React from 'react';
-import { RecoilRoot } from 'recoil';
 import styled from 'styled-components';
 import AppHeader from './components/AppHeader';
 import { AppSize } from './types';
@@ -8,14 +7,12 @@ import AppBody from './components/AppBody';
 const App: React.FC = () => {
   const { innerHeight: height, innerWidth: width } = window;
   return (
-    <RecoilRoot>
-      <AppWrap height={height}>
-        <AppContentWrap>
-          <AppHeader />
-          <AppBody />
-        </AppContentWrap>
-      </AppWrap>
-    </RecoilRoot>
+    <AppWrap height={height}>
+      <AppContentWrap>
+        <AppHeader />
+        <AppBody />
+      </AppContentWrap>
+    </AppWrap>
   );
 };
 
