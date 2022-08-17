@@ -1,10 +1,10 @@
 import React from 'react';
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { editState } from 'src/recoil/todo';
 import TodoDetail from './TodoEdit/TodoDetail';
 import Weather from './Home/Weather';
 import TodoList from './Home/TodoList';
+import { BodyWrap } from 'src/globalStyles';
 
 const AppBody = () => {
   const editMode = useRecoilValue(editState);
@@ -21,10 +21,5 @@ const AppBody = () => {
     </BodyWrap>
   );
 };
-
-const BodyWrap = styled.div`
-  padding-left: 24px;
-  padding-right: 24px;
-`;
 
 export default AppBody;

@@ -1,10 +1,21 @@
 import React from 'react';
 import { useRecoilState, useSetRecoilState } from 'recoil';
 import { editState, todoState, viewingId } from 'src/recoil/todo';
-import styled from 'styled-components';
-import { TitleProps, ITodo } from '../../types';
+import { ITodo } from '../../types';
 import { viewingTodo } from '../../recoil/todo';
 import moment from 'moment';
+import {
+  AddButton,
+  CheckBox,
+  CheckBoxWrap,
+  DeleteIcon,
+  Due,
+  Title,
+  TodoItem,
+  TodoItemInner,
+  TodoLayout,
+  TodoListWrap
+} from './todoListStyles';
 
 const TodoList: React.FC = () => {
   const [todoList, setTodoList] = useRecoilState<ITodo[]>(todoState);
@@ -89,76 +100,5 @@ const TodoList: React.FC = () => {
     </TodoLayout>
   );
 };
-const TodoLayout = styled.div`
-  background: white;
-  height: 400px;
-`;
-const AddButton = styled.button`
-  background: #13bd7e;
-  color: white;
-  border: 0;
-  width: 100%;
-  height: 48px;
-  border-radius: 8px;
-  margin-bottom: 5px;
-`;
-
-const TodoListWrap = styled.div`
-  margin-top: 15px;
-  height: 320px;
-  overflow-y: scroll;
-  background: #eeefef;
-`;
-
-const TodoItem = styled.div`
-  width: 100%;
-  font-size: 14px;
-`;
-
-const TodoItemInner = styled.div`
-  display: flex;
-  align-items: center;
-  width: 100%;
-  hieght: 24px;
-`;
-const CheckBoxWrap = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 10%;
-  height: 100%;
-`;
-
-const CheckBox = styled.input`
-  width: 16px;
-  height: 16px;
-  background: #13bd7e;
-  border: 0px;
-  border-radius: 9px;
-  margin-right: 10px;
-`;
-
-const Title = styled.span<TitleProps>`
-  text-decoration: ${props => (props.isComplete ? 'line-through' : 'none')};
-  display: flex;
-  color: ${props => (props.isExpired ? 'red' : 'black')};
-  align-items: center;
-  width: 85%;
-`;
-
-const Due = styled.div<Partial<TitleProps>>`
-  color: ${props => (props.isExpired ? 'red' : 'black')};
-  width: 85%;
-`;
-
-const DeleteIcon = styled.div`
-  width: 10%;
-  height: 40px;
-  display: flex;
-  align-items: center;
-  cursor: grab;
-  justify-content: center;
-  padding-right: 10px;
-`;
 
 export default TodoList;

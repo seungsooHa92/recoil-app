@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
 
-//TODO
-
 type ReturnType<T> = [T | undefined, React.Dispatch<React.SetStateAction<T | undefined>>];
 // eslint-disable-next-line
 export const useLocalStorage = <T,>(key: string, initialValue?: T): ReturnType<T> => {

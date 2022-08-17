@@ -1,6 +1,6 @@
-import styled from 'styled-components';
 import { useRecoilValue } from 'recoil';
 import { editState } from '../recoil/todo';
+import { HeaderWrap } from 'src/globalStyles';
 
 const AppHeader = () => {
   const editMode = useRecoilValue(editState);
@@ -11,13 +11,5 @@ const AppHeader = () => {
     </HeaderWrap>
   );
 };
-const HeaderWrap = styled.div`
-  algin-items: center;
-  padding-top: 32px;
-  padding-left: 24px;
-  padding-right: 24px;
-  .h1 {
-    margin-bottom: 10px;
-  }
-`;
+
 export default AppHeader;

@@ -1,11 +1,10 @@
-import React, { useEffect, useState } from 'react';
-import styled from 'styled-components';
+import React, { useState } from 'react';
 import { ITodo } from 'src/types';
 import { useRecoilState, useSetRecoilState, useRecoilValue } from 'recoil';
 import { editState, todoState, viewingTodo } from '../../recoil/todo';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css'; // css import
 import moment from 'moment';
+import { TodoTitleInput, TodoContent, StyledCalendar, DateContent, SaveButton } from './todoDetailStyles';
 
 const TodoDetail: React.FC = () => {
   const [todoList, setTodoList] = useRecoilState<ITodo[]>(todoState);
@@ -65,54 +64,5 @@ const TodoDetail: React.FC = () => {
     </div>
   );
 };
-const TodoTitleInput = styled.input`
-  width: 100%;
-  border: 0;
-  height: 40px;
-  background: #13bd7e66;
-`;
 
-const TodoContent = styled.textarea`
-  width: 100%;
-  border: 0;
-  background: #13bd7e66;
-  height: 160px;
-  resize: none;
-`;
-const StyledCalendar = styled(Calendar)`
-  width: 100%;
-  border: 0;
-  height: 100%;
-  .react-calendar__tile {
-    max-width: 100%;
-    padding: 10px 6.6667px;
-    background: none;
-    text-align: center;
-    line-height: 16px;
-    font-weight: bold;
-  }
-  .react-calendar__tile--now {
-    background: #13bd7e66;
-  }
-`;
-
-const DateContent = styled.div`
-  width: 100%;
-  height: 35px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-weight: bold;
-  font-size: 13px;
-`;
-
-const SaveButton = styled.button`
-  background: #13bd7e;
-  color: white;
-  border: 0;
-  width: 100%;
-  height: 48px;
-  border-radius: 8px;
-  margin-
-`;
 export default TodoDetail;
