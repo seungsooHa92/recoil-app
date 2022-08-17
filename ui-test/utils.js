@@ -1,3 +1,5 @@
+const path = require('path');
+
 const getSafetyElement = async (page, selector, time) => {
   try {
     let _ele = await page.$(selector);
