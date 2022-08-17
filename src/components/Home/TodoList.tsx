@@ -51,8 +51,10 @@ const TodoList: React.FC = () => {
   return (
     <TodoLayout>
       <h3>To-do</h3>
-      <AddButton onClick={handleAddTodo}>추가 버튼</AddButton>
-      <TodoListWrap>
+      <AddButton data-testid="addButton" onClick={handleAddTodo}>
+        추가 버튼
+      </AddButton>
+      <TodoListWrap data-testid="todo-panel">
         {todoList.map(todo => (
           <TodoItem key={todo.id}>
             <TodoItemInner>

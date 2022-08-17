@@ -47,11 +47,11 @@ const TodoDetail: React.FC = () => {
   return (
     <div>
       <h3>제목</h3>
-      <TodoTitleInput value={title} onChange={handleTitleChange} />
+      <TodoTitleInput data-testid="title-input" value={title} onChange={handleTitleChange} />
       <h3>내용</h3>
-      <TodoContent value={content} onChange={handleContentChange} />
+      <TodoContent data-testid="content-input" value={content} onChange={handleContentChange} />
       <h3 style={{ marginBottom: '0px' }}>Due Date</h3>
-      <StyledCalendar value={calendarDate} onChange={handleDateChange} />
+      <StyledCalendar data-testid="due-calendar" value={calendarDate} onChange={handleDateChange} />
       <DateContent>
         {/* 오늘 날짜는 기본으로 보여주고 , due date의 유무에따라 due date영역 렌더 */}
         {'(today)' +
@@ -59,7 +59,9 @@ const TodoDetail: React.FC = () => {
           ' / Due Date :' +
           (date === null ? 'No due Date' : moment(date).format('YYYY년 MM월 DD일'))}
       </DateContent>
-      <SaveButton onClick={handleSaveClick}>저장 버튼</SaveButton>
+      <SaveButton data-testid="save-button" onClick={handleSaveClick}>
+        저장 버튼
+      </SaveButton>
     </div>
   );
 };

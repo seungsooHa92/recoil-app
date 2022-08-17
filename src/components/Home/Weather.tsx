@@ -48,7 +48,9 @@ const Weather: React.FC = () => {
   return (
     <WeatherWrap>
       <h3>이번주 날씨 </h3>
-      <WeatherCardWrap onScroll={e => handleScroll(e)}>{renderWeatherCard()}</WeatherCardWrap>
+      <WeatherCardWrap data-testid="weather-panel" onScroll={e => handleScroll(e)}>
+        {renderWeatherCard()}
+      </WeatherCardWrap>
     </WeatherWrap>
   );
 };
