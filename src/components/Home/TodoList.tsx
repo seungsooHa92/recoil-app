@@ -62,13 +62,14 @@ const TodoList: React.FC = () => {
                 <CheckBox type="checkbox" checked={todo.isComplete} onChange={e => handleChange(e, todo.id)} />
               </CheckBoxWrap>
               <Title
+                data-testid="todo-title"
                 isExpired={isExpired(todo)}
                 onClick={e => handleTodoClick(e, todo.id)}
                 isComplete={todo.isComplete}
               >
                 {todo.title}
               </Title>
-              <DeleteIcon onClick={e => handleDeleteClick(e, todo.id)}>
+              <DeleteIcon data-testid="delete-icon" onClick={e => handleDeleteClick(e, todo.id)}>
                 <img src="/images/x.svg" alt="" style={{ width: '10px', height: '10px' }} />
               </DeleteIcon>
             </TodoItemInner>

@@ -17,7 +17,7 @@ const Weather: React.FC = () => {
     switch (weathers.state) {
       case 'hasValue':
         return (
-          <>
+          <WeatherCardWrap data-testid="weather-panel" onScroll={e => handleScroll(e)}>
             {weathers.contents.map(weather => (
               <WeatherCard key={weather.key} className={isToday(weather.krtime) ? 'card-today' : 'card'}>
                 <TempWrap>{weather.temp}℃</TempWrap>
@@ -28,7 +28,7 @@ const Weather: React.FC = () => {
                 </WeatherDate>
               </WeatherCard>
             ))}
-          </>
+          </WeatherCardWrap>
         );
       case 'loading':
         return (
@@ -48,9 +48,7 @@ const Weather: React.FC = () => {
   return (
     <WeatherWrap>
       <h3>이번주 날씨 </h3>
-      <WeatherCardWrap data-testid="weather-panel" onScroll={e => handleScroll(e)}>
-        {renderWeatherCard()}
-      </WeatherCardWrap>
+      {renderWeatherCard()}
     </WeatherWrap>
   );
 };
