@@ -1,7 +1,6 @@
-import axios from 'axios';
 import { atom, selector } from 'recoil';
 import { ITodo } from 'src/types';
-import { API } from './repository';
+import { Repository } from './repository';
 import WeatherModel from './weatherModel';
 /**
  * @function localStorageEfffect
@@ -62,14 +61,7 @@ export const clickedTodo = selector({
 export const weatherList = selector<Array<WeatherModel>>({
   key: 'weathers',
   get: async ({ get }) => {
-    try {
-      const { data, status } = await axios.get(
-        'https://openweathermap.org/data/2.5/onecall?lat=37.5683&lon=126.9778&units=metric&appid=439d4b804bc8187953eb36d2a8c26a02'
-      );
-      data.daily.pop();
-      return data.daily.map(dayWeather => new WeatherModel(dayWeather));
-    } catch (err) {
-      throw err;
-    }
+    const weathers = await Repository.getWeatherList();
+    return weathers;
   }
 });
