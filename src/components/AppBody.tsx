@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RecoilRoot, useRecoilValue } from 'recoil';
+import { useRecoilValue } from 'recoil';
 import { editState } from 'src/recoil/todo';
 import TodoDetail from './TodoEdit/TodoDetail';
 import Weather from './Home/Weather';

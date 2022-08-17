@@ -1,14 +1,14 @@
-import React from 'react';
-import TodoList from './TodoList';
-import Weather from './Weather';
+// import React from 'react';
+// import TodoList from './TodoList';
+// import Weather from './Weather';
 
-const Home = () => {
-  return (
-    <>
-      <Weather />
-      {/* <TodoList /> */}
-    </>
-  );
-};
+// const Home = () => {
+//   return (
+//     <>
+//       <Weather />
+//       {/* <TodoList /> */}
+//     </>
+//   );
+// };
 
-export default Home;
+// export default Home;
