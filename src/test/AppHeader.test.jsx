@@ -22,11 +22,6 @@ describe('[AppHeader] AppHeader.tsx TEST', () => {
     expect(thisWeek).toBeInTheDocument();
   });
   test('- 편집 모드가 false값으로 초기화 되었는지', () => {
-    render(
-      <RecoilRoot>
-        <AppHeader />
-      </RecoilRoot>
-    );
     const { result } = renderHook(() => useRecoilValue(editState), {
       wrapper: RecoilRoot
     });
