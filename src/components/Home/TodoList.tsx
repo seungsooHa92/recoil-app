@@ -53,7 +53,6 @@ const TodoList: React.FC = () => {
 
   const handleTodoClick = (event: React.MouseEvent<HTMLSpanElement>, todoId: string) => {
     event.stopPropagation();
-    console.log('####################   ', event, todoId);
     setEditMode(true);
     setViewingTodoId(todoId);
     const view = todoList.find(todo => todo.id === todoId);

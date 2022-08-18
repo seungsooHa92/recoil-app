@@ -44,7 +44,7 @@ export const viewingTodo = atom<ITodo>({
   default: null
 });
 
-export const clickedTodo = selector({
+export const clickedTodo = selector<ITodo>({
   key: 'clicedTodo',
   get: ({ get }) => {
     const todoList = get(todoState);
@@ -53,15 +53,18 @@ export const clickedTodo = selector({
   }
 });
 
-// export const weatherList = atom<Array<WeatherModel>>({
-//   key: 'weathers',
-//   default: []
-// });
-
 export const weatherList = selector<Array<WeatherModel>>({
   key: 'weathers',
   get: async ({ get }) => {
     const weathers = await Repository.getWeatherList();
     return weathers;
+  }
+});
+
+export const todayWeather = selector<WeatherModel>({
+  key: 'todayWeather',
+  get: ({ get }) => {
+    const weathers = get(weatherList);
+    return weathers[0];
   }
 });

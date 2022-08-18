@@ -24,6 +24,5 @@ describe('[Weather] Weather.tsx TEST', () => {
       )
     });
     await act(async () => await Repository.getWeatherList());
-    console.log(result.current);
   });
 });
