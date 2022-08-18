@@ -10,6 +10,8 @@ const { testWeatherList } = require('./testWeatherList');
 const path = require('path');
 
 const main = async () => {
+  // headless : true -> 크로미움 브라우저가 열리지 않는 headless로 동작
+  // headless : false -> 크로미움 브라우저가 열림
   const browser = await puppeteer.launch({
     headless: true,
     args: ['--window-size=1920,1080']

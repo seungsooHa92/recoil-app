@@ -5,6 +5,7 @@ const { explicitWait } = require('./utils');
 const testEditModeOn = async page => {
   const headerEle = await explicitWait(page, '[data-testid="header"]', MONITOR_CNT, MONITOR_INTERVAL);
 
+  // 첫번째 todo 아이템 클릭후 헤더 텍스트가 To-Do로 바뀌는지 확인
   const firstTodoItemClick = async () =>
     await page.$$('[data-testid="todo-title"]').then(result => {
       return result[0].click();
