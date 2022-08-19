@@ -1,4 +1,4 @@
-# Recoil을 활요한 
+# Recoil을 활용한 TodoApp
 
 ## 실행환경
 
